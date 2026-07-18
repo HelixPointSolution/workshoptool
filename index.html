@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helix Point — Procurement Desk</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header>
+  <div class="wrap head-row">
+    <div>
+      <h1>🏭 Helix Point — Procurement Desk</h1>
+      <p>RFQ · Quote Comparison · Supplier Scorecard — shared with your team.</p>
+    </div>
+    <div class="head-right">
+      <span id="cloudStatus" class="pill pill-off">● Offline</span>
+      <button class="btn ghost sm" onclick="openSettings()">⚙️ Setup</button>
+    </div>
+  </div>
+</header>
+
+<div id="setupBanner" class="banner hidden">
+  <div class="wrap">
+    <b>Share this with your team →</b> connect a free Supabase database so saved RFQ rounds and your supplier directory sync for everyone.
+    <button class="btn sm" onclick="openSettings()">Connect Supabase</button>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" data-t="rfq" onclick="show('rfq')">1 · RFQ Generator</button>
+  <button class="tab" data-t="cmp" onclick="show('cmp')">2 · Quote Comparison</button>
+  <button class="tab" data-t="score" onclick="show('score')">3 · Supplier Scorecard</button>
+</div>
+
+<!-- TAB 1: RFQ -->
+<section id="rfq" class="panel">
+  <h2>RFQ Generator</h2>
+  <div class="sub">Set your inquiry once — it feeds the comparison tab too. Then generate a ready-to-send RFQ.</div>
+  <div class="row">
+    <div style="flex:0 0 160px"><label>Grade</label>
+      <select id="grade" onchange="syncDensity()">
+        <option value="5052">5052-H32</option><option value="6061">6061</option>
+        <option value="5083">5083</option><option value="custom">Custom…</option>
+      </select>
+    </div>
+    <div style="flex:0 0 130px"><label>Density g/cm³</label><input id="density" value="2.68"></div>
+    <div style="flex:0 0 150px"><label>Ref No.</label><input id="ref" placeholder="e.g. HLP-2607-01"></div>
+  </div>
+  <div id="items"></div>
+  <button class="btn ghost sm" onclick="addItem()">+ Add item</button>
+  <div class="toolbar">
+    <button class="btn" onclick="genRFQ()">Generate RFQ email</button>
+    <button class="btn ghost" onclick="copyBox('rfqOut')">Copy</button>
+  </div>
+  <textarea id="rfqOut" placeholder="Your RFQ email appears here…"></textarea>
+</section>
+
+<!-- TAB 2: COMPARISON -->
+<section id="cmp" class="panel hidden">
+  <h2>Quote Comparison</h2>
+  <div class="sub">Add each supplier's quoted thickness + unit price per item. Analyse normalises to RM/kg, checks spec, and picks the winner.</div>
+  <div id="suppliers"></div>
+  <button class="btn ghost sm" onclick="addSupplier()">+ Add supplier</button>
+  <div class="toolbar">
+    <button class="btn" onclick="analyse()">⚙️ Analyse quotes</button>
+    <button class="btn ghost" onclick="saveRoundUI()">💾 Save round to team</button>
+    <button class="btn ghost" onclick="openRounds()">📂 Load saved rounds</button>
+  </div>
+  <div id="result"></div>
+</section>
+
+<!-- TAB 3: SCORECARD -->
+<section id="score" class="panel hidden">
+  <h2>Supplier Scorecard</h2>
+  <div class="sub">Score each supplier 1–5 per round. Save to your team's shared directory so everyone sees who's reliable.</div>
+  <div id="scoreBody"></div>
+  <button class="btn ghost sm" onclick="addScore()">+ Add supplier</button>
+  <div class="toolbar">
+    <button class="btn" onclick="rankScores()">🏆 Rank suppliers</button>
+    <button class="btn ghost" onclick="saveSuppliersUI()">☁️ Save to team directory</button>
+    <button class="btn ghost" onclick="loadSuppliersUI()">⬇️ Load team directory</button>
+  </div>
+  <div id="scoreResult"></div>
+</section>
+
+<!-- Settings modal -->
+<div id="settingsModal" class="modal hidden">
+  <div class="modal-card">
+    <h3>Connect your team database</h3>
+    <p class="sub">Create a free project at <b>supabase.com</b>, run the setup SQL (see README), then paste your keys here. These are safe to share with your team — the anon key is public by design.</p>
+    <label>Your name (shows on saved rounds)</label>
+    <input id="cfgUser" placeholder="e.g. Khoo">
+    <label>Supabase Project URL</label>
+    <input id="cfgUrl" placeholder="https://xxxxx.supabase.co">
+    <label>Supabase anon key</label>
+    <input id="cfgKey" placeholder="eyJhbGci...">
+    <div class="toolbar">
+      <button class="btn" onclick="saveSettings()">Save & connect</button>
+      <button class="btn ghost" onclick="closeSettings()">Cancel</button>
+    </div>
+    <p class="hint">Tip: for the whole team to share automatically, put these same values in <code>js/config.js</code> and redeploy. Values entered here are stored only in this browser.</p>
+  </div>
+</div>
+
+<!-- Rounds drawer -->
+<div id="roundsModal" class="modal hidden">
+  <div class="modal-card">
+    <h3>Saved RFQ rounds</h3>
+    <div id="roundsList" class="sub">Loading…</div>
+    <div class="toolbar"><button class="btn ghost" onclick="closeRounds()">Close</button></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

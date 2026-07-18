@@ -1,0 +1,10 @@
+{
+  "name": "helix-point-procurement-desk",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Helix Point Solution — RFQ generator, supplier quote comparison (RM/kg + spec match), and shared supplier scorecard. Static site + Supabase.",
+  "scripts": {
+    "dev": "npx serve .",
+    "start": "npx serve ."
+  }
+}
