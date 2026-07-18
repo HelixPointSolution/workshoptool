@@ -45,7 +45,7 @@ th{background:#eef3f8;font-size:.78rem;text-transform:uppercase;letter-spacing:.
 .verdict h3{color:var(--good);margin-bottom:6px}
 .flag{background:var(--warn-bg);border:1px solid #f0cfab;border-radius:8px;padding:10px 12px;margin-top:10px;font-size:.88rem;color:#7a3d0c}
 textarea{width:100%;min-height:230px;font-family:ui-monospace,Consolas,monospace;font-size:.86rem;padding:12px;border:1px solid var(--line);border-radius:8px}
-.hidden{display:none}
+.hidden{display:none !important}
 .hint{font-size:.8rem;color:var(--muted);margin-top:8px}
 .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
 .modal{position:fixed;inset:0;background:rgba(15,23,32,.55);display:flex;align-items:center;justify-content:center;padding:18px;z-index:50}
