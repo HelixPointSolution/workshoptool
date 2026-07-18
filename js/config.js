@@ -9,6 +9,7 @@
 // Leave blank to run the app in local-only mode (works, but nothing is shared).
 
 window.PROCUREMENT_CONFIG = {
-  SUPABASE_URL: "",       // e.g. "https://abcd1234.supabase.co"
-  SUPABASE_ANON_KEY: ""   // e.g. "eyJhbGciOiJIUzI1NiIsInR5cCI6..."
+  SUPABASE_URL: "https://iryftwfbrmbkvfinvycq.supabase.co",
+  SUPABASE_ANON_KEY: "sb_publishable_z_NlFB-fELF1hpL4tkQgRw_iXp51xAy"
+  // ↑ Publishable (anon) key — safe to be public. NEVER put the sb_secret_ key here.
 };
