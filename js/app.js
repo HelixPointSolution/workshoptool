@@ -37,8 +37,13 @@ function initSupabase(){
   banner.classList.remove('hidden');
 }
 
-/* ---------- Settings modal ---------- */
+/* ---------- Modals ---------- */
+function closeAllModals(){
+  document.getElementById('settingsModal').classList.add('hidden');
+  document.getElementById('roundsModal').classList.add('hidden');
+}
 function openSettings(){
+  closeAllModals();
   const cfg = loadConfig();
   document.getElementById('cfgUser').value = cfg.user==='Team'?'':cfg.user;
   document.getElementById('cfgUrl').value  = cfg.url;
@@ -203,6 +208,7 @@ async function saveRoundUI(){
   alert(error ? ('Could not save: '+error.message) : 'Round saved to your team ✅');
 }
 async function openRounds(){
+  closeAllModals();
   const modal=document.getElementById('roundsModal');
   const list=document.getElementById('roundsList');
   modal.classList.remove('hidden');

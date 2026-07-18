@@ -85,7 +85,7 @@
 </section>
 
 <!-- Settings modal -->
-<div id="settingsModal" class="modal hidden">
+<div id="settingsModal" class="modal hidden" onclick="if(event.target===this)closeAllModals()">
   <div class="modal-card">
     <h3>Connect your team database</h3>
     <p class="sub">Create a free project at <b>supabase.com</b>, run the setup SQL (see README), then paste your keys here. These are safe to share with your team — the anon key is public by design.</p>
@@ -104,7 +104,7 @@
 </div>
 
 <!-- Rounds drawer -->
-<div id="roundsModal" class="modal hidden">
+<div id="roundsModal" class="modal hidden" onclick="if(event.target===this)closeAllModals()">
   <div class="modal-card">
     <h3>Saved RFQ rounds</h3>
     <div id="roundsList" class="sub">Loading…</div>
